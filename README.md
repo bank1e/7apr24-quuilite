@@ -8,7 +8,7 @@ https://quuilite.web.app/
 
 # Screenshot
 
-![](https://github.com/Nor1SterlingCollege/24mar24-quuiLite/blob/7cbe9f86d7aa497a0abfb9d019ddca72ae5a598e/src/assets/Video_2024-03-24_085248.gif?raw=true)
+![](https://raw.githubusercontent.com/bank1e/7apr24-quuilite/main/src/assets/Video_2024-03-24_085248.gif)
 
 # Features
 
