@@ -84,20 +84,19 @@ export default function QuuiNoteList() {
     if (renderedNotes[0] == null) {
       const headers = new Headers({
         "Content-Type": "application/json",
-        Authorization:
-          "Bearer SlkLPTI1TFMklNH5B_M-R27ffoW47_1tz6wKh5oQJWBI7YcVzA",
       });
 
       const requestOptions = {
         headers: headers,
       };
-      await fetch("https://crudapi.co.uk/api/v1/quuiNote", requestOptions)
+      await fetch("https://enqjhcnlm-xxkp9rtjij68q.free.beeceptor.com/api/quuilite", requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          const tmpQuui = result.items;
+          console.log(result);
+          const tmpQuui = result;
           tmpQuui.forEach(function (el) {
-            // console.log(el.quuiNote + el._uuid);
-            dispatch(addNote(el.quuiNote + el._uuid));
+            console.log(el);
+            dispatch(addNote(el.quuiNote + el.id));
           });
           if (tmpQuui.length === 0) {
             toastifyNoExistingNote();
@@ -119,20 +118,18 @@ export default function QuuiNoteList() {
     e.currentTarget.inputQuuiNote.value = "";
 
     const headers = new Headers({
-      "Content-Type": "application/json",
-      Authorization:
-        "Bearer SlkLPTI1TFMklNH5B_M-R27ffoW47_1tz6wKh5oQJWBI7YcVzA",
+      "Content-Type": "application/json"
     });
 
     const requestOptions = {
       method: "POST",
       headers: headers,
-      body: JSON.stringify([{ quuiNote }]),
+      body: JSON.stringify({ quuiNote }),
     };
-    await fetch("https://crudapi.co.uk/api/v1/quuiNote", requestOptions)
+    await fetch("https://enqjhcnlm-xxkp9rtjij68q.free.beeceptor.com/api/quuilite", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        dispatch(addNote(result.items[0].quuiNote + result.items[0]._uuid));
+        dispatch(addNote(result.quuiNote + result.id));
       })
       .then(toastifyPosted(quuiNote))
       .catch((error) => {
@@ -144,9 +141,7 @@ export default function QuuiNoteList() {
     const quuiNote = inputValue;
     console.log(quuiNoteId);
     const headers = new Headers({
-      "Content-Type": "application/json",
-      Authorization:
-        "Bearer SlkLPTI1TFMklNH5B_M-R27ffoW47_1tz6wKh5oQJWBI7YcVzA",
+      "Content-Type": "application/json"
     });
     const requestOptions = {
       method: "PUT",
@@ -155,7 +150,7 @@ export default function QuuiNoteList() {
     };
     console.log(requestOptions);
     await fetch(
-      "https://crudapi.co.uk/api/v1/quuiNote/" + quuiNoteId,
+      "https://enqjhcnlm-xxkp9rtjij68q.free.beeceptor.com/api/quuilite/" + quuiNoteId,
       requestOptions
     )
       .then((response) => response.json())
@@ -168,11 +163,10 @@ export default function QuuiNoteList() {
         toasfityErrorMessage(error);
       });
   };
-  const handleNoteRemove = async (note) => {
+  const handleNoteRemove = async (id) => {
     const headers = new Headers({
-      "Content-Type": "application/json",
-      Authorization:
-        "Bearer SlkLPTI1TFMklNH5B_M-R27ffoW47_1tz6wKh5oQJWBI7YcVzA",
+      "Content-Type": "application/json"
+
     });
     const requestOptions = {
       method: "DELETE",
@@ -180,7 +174,7 @@ export default function QuuiNoteList() {
     };
 
     await fetch(
-      "https://crudapi.co.uk/api/v1/quuiNote/" + note.slice(-36),
+      "https://enqjhcnlm-xxkp9rtjij68q.free.beeceptor.com/api/quuilite/" + id.slice(-20),
       requestOptions
     )
       .then((response) => console.log(response.json()))
@@ -190,7 +184,7 @@ export default function QuuiNoteList() {
         toasfityErrorMessage(error);
       });
 
-    dispatch(removeNote(note));
+    dispatch(removeNote(id));
   };
   const renderedNotes = Array.from(
     new Set(
@@ -198,14 +192,14 @@ export default function QuuiNoteList() {
         return el.includes(searchByKeyword);
       })
     )
-  ).map((note) => {
+  ).map((id) => {
     return (
-      <Grid>
+      <Grid key={id}>
         <GridColumn textAlign="center">
-          <List key={note} horizontal>
+          <List horizontal>
             <ListItem>
               <ListContent>
-                <CopyToClipboard copyText={note.slice(0, -36)} />
+                <CopyToClipboard copyText={id.slice(0, -20)} />
               </ListContent>
             </ListItem>
             <ListItem>
@@ -214,14 +208,12 @@ export default function QuuiNoteList() {
                   <Input
                     className="inputField"
                     onChange={(e) => setInputValue(e.target.value)}
-                    onChangeCapture={() => setQuuiNoteId(note.slice(-36))}
-                    defaultValue={note.slice(0, -36)}
+                    onChangeCapture={() => setQuuiNoteId(id.slice(-20))}
+                    defaultValue={id.slice(0, -20)}
                     name="editQuuiNote"
-                  />{" "}
+                  />
                 </FormField>
               </Form>
-
-              <ListContent></ListContent>
             </ListItem>
             <ListItem>
               <ListContent>
@@ -238,8 +230,7 @@ export default function QuuiNoteList() {
               </ListContent>
             </ListItem>
             <ListItem>
-              {" "}
-              <Button onClick={() => handleNoteRemove(note)} color="red">
+              <Button onClick={() => handleNoteRemove(id)} color="red">
                 X
               </Button>
             </ListItem>
@@ -248,6 +239,7 @@ export default function QuuiNoteList() {
       </Grid>
     );
   });
+  
 
   return (
     <>
@@ -258,7 +250,7 @@ export default function QuuiNoteList() {
         </Form>{" "}
         <Input
           placeholder="Search by keyword..."
-          size="medium"
+          size="large"
           onChange={(e) => setSearchByKeyword(e.target.value)}
         />
       </Grid>
@@ -269,7 +261,7 @@ export default function QuuiNoteList() {
       >
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h1" icon inverted textAlign="center">
-            QuuiLite {searchByKeyword}
+            QuuiLite - enabled by beeceptor.com {searchByKeyword}
           </Header>{" "}
           <Form size="large" onSubmit={postApi}>
             <FormField>
