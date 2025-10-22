@@ -83,13 +83,13 @@ export default function QuuiNoteList() {
   const handleFetchExistingData = async () => {
     if (renderedNotes[0] == null) {
       const headers = new Headers({
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
       });
 
       const requestOptions = {
         headers: headers,
       };
-      await fetch("https://enqjhcnlm-xxkp9rtjij68q.free.beeceptor.com/api/quuilite", requestOptions)
+      await fetch("https://8a2vm9ahbjo6.free.beeceptor.com/api/quuilite", requestOptions)
         .then((response) => response.json())
         .then((result) => {
           console.log(result);
@@ -118,7 +118,7 @@ export default function QuuiNoteList() {
     e.currentTarget.inputQuuiNote.value = "";
 
     const headers = new Headers({
-      "Content-Type": "application/json"
+      // "Content-Type": "application/json"
     });
 
     const requestOptions = {
@@ -126,7 +126,7 @@ export default function QuuiNoteList() {
       headers: headers,
       body: JSON.stringify({ quuiNote }),
     };
-    await fetch("https://enqjhcnlm-xxkp9rtjij68q.free.beeceptor.com/api/quuilite", requestOptions)
+    await fetch("https://8a2vm9ahbjo6.free.beeceptor.com/api/quuilite", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         dispatch(addNote(result.quuiNote + result.id));
@@ -141,7 +141,7 @@ export default function QuuiNoteList() {
     const quuiNote = inputValue;
     console.log(quuiNoteId);
     const headers = new Headers({
-      "Content-Type": "application/json"
+      // "Content-Type": "application/json"
     });
     const requestOptions = {
       method: "PUT",
@@ -150,7 +150,7 @@ export default function QuuiNoteList() {
     };
     console.log(requestOptions);
     await fetch(
-      "https://enqjhcnlm-xxkp9rtjij68q.free.beeceptor.com/api/quuilite/" + quuiNoteId,
+      "https://8a2vm9ahbjo6.free.beeceptor.com/api/quuilite/" + quuiNoteId,
       requestOptions
     )
       .then((response) => response.json())
@@ -165,7 +165,7 @@ export default function QuuiNoteList() {
   };
   const handleNoteRemove = async (id) => {
     const headers = new Headers({
-      "Content-Type": "application/json"
+      // "Content-Type": "application/json"
 
     });
     const requestOptions = {
@@ -174,7 +174,7 @@ export default function QuuiNoteList() {
     };
 
     await fetch(
-      "https://enqjhcnlm-xxkp9rtjij68q.free.beeceptor.com/api/quuilite/" + id.slice(-20),
+      "https://8a2vm9ahbjo6.free.beeceptor.com/api/quuilite/" + id.slice(-20),
       requestOptions
     )
       .then((response) => console.log(response.json()))
